@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Calendar, Clock, User, Phone, Mail, MessageSquare, Check } from 'lucide-react';
-import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import { fetchStaff, Staff } from '../data/staff';
+import mockServices from '../lib/mockServices';
+import Flatpickr from 'react-flatpickr';
+import 'flatpickr/dist/themes/material_blue.css';
 
 interface Service {
   id: string;
@@ -10,11 +13,7 @@ interface Service {
   duration: number;
 }
 
-interface Staff {
-  id: string;
-  name: string;
-  specialization: string | null;
-}
+// Staff type imported from data/staff
 
 interface BookingPageProps {
   preSelectedServiceId?: string;
@@ -33,9 +32,9 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
     staffId: '',
     date: '',
     time: '',
-    customerName: profile?.full_name || '',
-    customerPhone: profile?.phone || '',
-    customerEmail: user?.email || '',
+    customerName: '',
+    customerPhone: '',
+    customerEmail: '',
     notes: '',
   });
 
@@ -50,86 +49,54 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
   }, []);
 
   useEffect(() => {
-    if (profile) {
+    // Prefill data only when user is logged in and reaches step 3
+    if (step === 3 && user && profile) {
       setBookingData(prev => ({
         ...prev,
-        customerName: profile.full_name,
-        customerPhone: profile.phone || '',
+        customerName: profile.full_name || prev.customerName,
+        customerPhone: profile.phone || prev.customerPhone,
+        customerEmail: user.email || prev.customerEmail,
       }));
     }
-    if (user) {
-      setBookingData(prev => ({
-        ...prev,
-        customerEmail: user.email || '',
-      }));
-    }
-  }, [profile, user]);
+  }, [step, profile, user]);
 
   const loadData = async () => {
-    try {
-      const [servicesRes, staffRes] = await Promise.all([
-        supabase.from('services').select('id, name, price, duration').eq('is_active', true),
-        supabase.from('staff').select('*').eq('is_available', true),
-      ]);
-
-      if (servicesRes.data) setServices(servicesRes.data);
-      if (staffRes.data) setStaff(staffRes.data);
-    } catch (error) {
-      console.error('Error loading data:', error);
-    }
+    // Load all services from local mockServices
+    setServices(mockServices as any);
+    const loaded = await fetchStaff();
+    setStaff(loaded);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
+    // Simulate booking creation locally (no Supabase)
     try {
-      const { error } = await supabase.from('bookings').insert({
-        user_id: user?.id || null,
-        service_id: bookingData.serviceId,
-        staff_id: bookingData.staffId || null,
-        booking_date: bookingData.date,
-        booking_time: bookingData.time,
-        customer_name: bookingData.customerName,
-        customer_phone: bookingData.customerPhone,
-        customer_email: bookingData.customerEmail,
-        notes: bookingData.notes,
-        status: 'pending',
-      });
-
-      if (error) throw error;
-
-      const selectedService = services.find(s => s.id === bookingData.serviceId);
-      const selectedStaff = staff.find(s => s.id === bookingData.staffId);
-
-      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-booking-email`;
-      await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          customerName: bookingData.customerName,
-          customerEmail: bookingData.customerEmail,
-          customerPhone: bookingData.customerPhone,
-          serviceName: selectedService?.name || 'Service',
-          servicePrice: selectedService?.price || 0,
-          bookingDate: new Date(bookingData.date).toLocaleDateString('en-IN', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          }),
-          bookingTime: bookingData.time,
-          staffName: selectedStaff?.name,
-          notes: bookingData.notes,
-        }),
-      }).catch(err => console.log('Email notification error:', err));
-
+      await new Promise((res) => setTimeout(res, 500));
       setSuccess(true);
-    } catch (error: any) {
-      console.error('Error creating booking:', error);
+
+      // Build WhatsApp message with booking details and open chat
+      const svc: any = services.find((s: any) => s.id === bookingData.serviceId);
+      const st: any = staff.find((s: any) => s.id === bookingData.staffId);
+      const message = [
+        'New Booking Details:',
+        `Service: ${svc ? svc.name : bookingData.serviceId}`,
+        svc && svc.price ? `Price: ${svc.price}` : '',
+        `Staff: ${st ? st.name : 'Any'}`,
+        `Date: ${bookingData.date || '-'}`,
+        `Time: ${bookingData.time || '-'}`,
+        `Customer Name: ${bookingData.customerName || '-'}`,
+        `Customer Phone: ${bookingData.customerPhone || '-'}`,
+        `Customer Email: ${bookingData.customerEmail || '-'}`,
+        `Notes: ${bookingData.notes || '-'}`,
+      ].filter(Boolean).join('\n');
+
+      // Send to specific salon number (international format, no + or spaces)
+      const salonPhone = '918305335548'; // replace with your salon number
+      const waUrl = `https://wa.me/${salonPhone}?text=${encodeURIComponent(message)}`;
+      window.open(waUrl, '_blank');
+    } catch (err) {
+      console.error('Error creating booking:', err);
       alert('Failed to create booking. Please try again.');
     } finally {
       setLoading(false);
@@ -159,7 +126,22 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
             Your appointment has been booked successfully. You will receive a confirmation email shortly.
           </p>
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => {
+              // go back to booking form without full reload
+              setSuccess(false);
+              setStep(1);
+              setBookingData({
+                serviceId: preSelectedServiceId || '',
+                staffId: '',
+                date: '',
+                time: '',
+                customerName: '',
+                customerPhone: '',
+                customerEmail: '',
+                notes: '',
+              });
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
             className="px-8 py-3 bg-gradient-to-r from-amber-500 to-pink-500 text-white rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300"
           >
             Book Another Appointment
@@ -209,9 +191,7 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">Select Service & Staff</h3>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Choose Service *
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Service</label>
                   <select
                     value={bookingData.serviceId}
                     onChange={(e) => setBookingData({ ...bookingData, serviceId: e.target.value })}
@@ -219,27 +199,25 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
                     required
                   >
                     <option value="">Select a service</option>
-                    {services.map((service) => (
-                      <option key={service.id} value={service.id}>
-                        {service.name} - ₹{service.price} ({service.duration} mins)
+                    {services.map((s: any) => (
+                      <option key={s.id} value={s.id}>
+                        {s.name} {s.price ? `— ${s.price}` : ''}
                       </option>
                     ))}
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Choose Staff (Optional)
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Staff (optional)</label>
                   <select
                     value={bookingData.staffId}
                     onChange={(e) => setBookingData({ ...bookingData, staffId: e.target.value })}
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
                   >
-                    <option value="">Any available staff</option>
-                    {staff.map((s) => (
-                      <option key={s.id} value={s.id}>
-                        {s.name} {s.specialization && `- ${s.specialization}`}
+                    <option value="">Any staff</option>
+                    {staff.map((st: any) => (
+                      <option key={st.id} value={st.id}>
+                        {st.name} {st.specialization ? `— ${st.specialization}` : ''}
                       </option>
                     ))}
                   </select>
@@ -265,14 +243,18 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
                     <Calendar className="inline h-4 w-4 mr-1" />
                     Choose Date *
                   </label>
-                  <input
-                    type="date"
-                    value={bookingData.date}
-                    onChange={(e) => setBookingData({ ...bookingData, date: e.target.value })}
-                    min={getMinDate()}
-                    max={getMaxDate()}
+                  <Flatpickr
+                    value={bookingData.date ? new Date(bookingData.date) : undefined}
+                    options={{
+                      dateFormat: 'Y-m-d',
+                      minDate: getMinDate(),
+                      maxDate: getMaxDate(),
+                    }}
+                    onChange={(selected: any) => {
+                      const d = selected && selected[0] ? (selected[0] as Date).toISOString().split('T')[0] : '';
+                      setBookingData({ ...bookingData, date: d });
+                    }}
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    required
                   />
                 </div>
 
@@ -339,12 +321,18 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
                   <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <input
                     type="tel"
+                    inputMode="numeric"
+                    pattern="\d{10}"
                     placeholder="Phone Number"
                     value={bookingData.customerPhone}
-                    onChange={(e) => setBookingData({ ...bookingData, customerPhone: e.target.value })}
+                    onChange={(e) => {
+                      const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                      setBookingData({ ...bookingData, customerPhone: digits });
+                    }}
                     className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
                     required
                   />
+                  <small className="text-xs text-gray-500 block mt-1">Enter 10 digit mobile number</small>
                 </div>
 
                 <div className="relative">

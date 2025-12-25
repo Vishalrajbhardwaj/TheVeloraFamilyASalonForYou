@@ -1,31 +1,30 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '../lib/supabase';
+import { createContext, useContext, useState, ReactNode } from 'react';
 
 interface Profile {
   id: string;
   full_name: string;
-  phone: string | null;
-  role: 'user' | 'admin';
+  phone?: string | null;
+  role?: 'user' | 'Staff' | 'Manager' | 'Admin' | null;
 }
 
 interface AuthContextType {
-  user: User | null;
+  user: { id: string; email?: string } | null;
   profile: Profile | null;
-  session: Session | null;
+  session: any | null;
   loading: boolean;
-  signUp: (email: string, password: string, fullName: string, phone: string) => Promise<{ error: any }>;
-  signIn: (email: string, password: string) => Promise<{ error: any }>;
+  signUp: (email: string, password: string, fullName: string, phone?: string) => Promise<{ error: any }>;
+  signIn: (email: string, password: string) => Promise<{ error: any; profile?: Profile | null }>;
   signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Simple local auth stub — no external provider
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<{ id: string; email?: string } | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [session, setSession] = useState<any | null>(null);
+  const [loading] = useState(false);
 
   useEffect(() => {
     if (!supabase) {
@@ -100,21 +99,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const signIn = async (email: string, password: string) => {
-    try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      return { error };
-    } catch (error) {
-      return { error };
-    }
+  const signIn = async (email: string, _password: string) => {
+    // Local stub: set a temporary user/profile
+    const id = `local-${Date.now()}`;
+    setUser({ id, email });
+    const p: Profile = { id, full_name: email.split('@')[0], phone: null, role: 'user' };
+    setProfile(p);
+    setSession({ created_at: new Date().toISOString(), user: { id, email } });
+    return { error: null, profile: p };
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    setUser(null);
     setProfile(null);
+    setSession(null);
   };
 
   return (
@@ -126,8 +124,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (context === undefined) throw new Error('useAuth must be used within an AuthProvider');
   return context;
 };

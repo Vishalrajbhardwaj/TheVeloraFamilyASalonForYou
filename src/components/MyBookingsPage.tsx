@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Calendar, Clock, CheckCircle, XCircle, Loader } from 'lucide-react';
-import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 
 interface Booking {
@@ -16,7 +15,7 @@ interface Booking {
 }
 
 export const MyBookingsPage = () => {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,25 +26,22 @@ export const MyBookingsPage = () => {
   }, [user]);
 
   const loadBookings = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('bookings')
-        .select(`
-          *,
-          services:service_id(name, price),
-          staff:staff_id(name)
-        `)
-        .eq('user_id', user?.id)
-        .order('booking_date', { ascending: false })
-        .order('booking_time', { ascending: false });
-
-      if (error) throw error;
-      setBookings(data || []);
-    } catch (error) {
-      console.error('Error loading bookings:', error);
-    } finally {
-      setLoading(false);
-    }
+    // Load mock bookings locally (no Supabase)
+    const mock: Booking[] = [
+      {
+        id: 'b1',
+        booking_date: new Date().toISOString().split('T')[0],
+        booking_time: '14:00',
+        status: 'pending',
+        customer_name: 'Local User',
+        customer_phone: '0800000000',
+        notes: null,
+        services: { name: 'Men Haircut', price: 300 },
+        staff: { name: 'Asha' },
+      },
+    ];
+    setBookings(mock);
+    setLoading(false);
   };
 
   const getStatusColor = (status: string) => {
@@ -89,6 +85,19 @@ export const MyBookingsPage = () => {
             My Bookings
           </h1>
           <p className="text-gray-600 text-lg">View and manage your appointments</p>
+          {profile && (
+            <div className="mt-4">
+              <span
+                className={`inline-block px-4 py-2 rounded-full text-sm font-medium ${
+                  profile.role === 'Admin'
+                    ? 'bg-purple-100 text-purple-700 border border-purple-200'
+                    : 'bg-blue-100 text-blue-700 border border-blue-200'
+                }`}
+              >
+                {profile.role === 'Admin' ? 'Admin Account' : 'User Account'}
+              </span>
+            </div>
+          )}
         </div>
 
         {bookings.length === 0 ? (

@@ -1,6 +1,7 @@
-import { MapPin, Clock, Phone, Mail, Award, Users, Sparkles, Heart } from 'lucide-react';
+import { Award, Users, Sparkles, Heart } from 'lucide-react';
 
 export const AboutPage = () => {
+
   const features = [
     {
       icon: <Award className="h-8 w-8" />,
@@ -34,26 +35,10 @@ export const AboutPage = () => {
               About Us
             </span>
           </div>
-          <div className="mb-6 flex justify-center">
-            <img
-              src="https://i.imgur.com/8xZ9YqK.png"
-              alt="The Velora Logo"
-              className="h-24 md:h-32 w-auto object-contain"
-            />
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-amber-600 to-pink-600 bg-clip-text text-transparent">
-            The Velora
-          </h1>
-          <p className="text-xl md:text-2xl text-amber-600 mb-4 font-serif italic">
-            A Family Salon for U
-          </p>
-          <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-            Best Unisex Salon in Jabalpur - Your destination for premium beauty and grooming services
-          </p>
         </div>
 
         <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-8 md:p-12 mb-12 animate-fadeInUp">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">Welcome to Velora</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-6">🙏 Welcome to The Velora Family Salon</h2>
           <div className="prose prose-lg max-w-none text-gray-600 space-y-4">
             <p>
               Located on Main Road, Gorakhpur Market (near Sampat Saree), The Velora Family Salon is a
@@ -70,6 +55,52 @@ export const AboutPage = () => {
               Whether it's daily grooming, a party makeover, or a complete bridal makeover, Velora is
               your one-stop destination, open 7 days a week.
             </p>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <h3 className="text-2xl font-bold text-gray-800">📖 Our Story</h3>
+              <p className="text-gray-600">
+                Founded with a vision to provide exceptional beauty and grooming services to the people of Jabalpur,
+                The Velora Family Salon has been serving the community for years. Our journey began with a simple
+                belief - that everyone deserves to look and feel their best, regardless of age or gender.
+              </p>
+              <p className="text-gray-600">
+                What started as a small salon has grown into a trusted destination where families come together
+                for their beauty needs. We take pride in being a women-owned business that values customer
+                satisfaction above all else.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-2xl font-bold text-gray-800">💼 Our Commitment</h3>
+              <p className="text-gray-600">
+                At Velora, we are committed to excellence in every service we provide. Our team of skilled
+                professionals stays updated with the latest trends and techniques in the beauty industry.
+              </p>
+              <p className="text-gray-600">
+                We believe in using only genuine, high-quality products that are safe for our clients and
+                the environment. Your trust and satisfaction are our greatest achievements.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">Why Choose The Velora Family Salon?</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="text-center p-4 bg-gradient-to-br from-amber-50 to-pink-50 rounded-xl">
+                <h4 className="font-bold text-gray-800 mb-2">Experienced Team</h4>
+                <p className="text-sm text-gray-600">Over 10+ years of combined experience in beauty and grooming</p>
+              </div>
+              <div className="text-center p-4 bg-gradient-to-br from-pink-50 to-purple-50 rounded-xl">
+                <h4 className="font-bold text-gray-800 mb-2">Quality Products</h4>
+                <p className="text-sm text-gray-600">Genuine international brands and premium quality products</p>
+              </div>
+              <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-amber-50 rounded-xl">
+                <h4 className="font-bold text-gray-800 mb-2">Family Friendly</h4>
+                <p className="text-sm text-gray-600">Comfortable environment for men, women, and children</p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -93,103 +124,129 @@ export const AboutPage = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-8 animate-fadeInUp">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6">Contact Information</h3>
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <MapPin className="h-6 w-6 text-amber-600 flex-shrink-0 mt-1" />
-                <div>
-                  <p className="font-medium text-gray-800">Location</p>
-                  <p className="text-gray-600">
-                    Gorakhpur Main Road, Near Azad Chowk
-                    <br />
-                    Jabalpur, Madhya Pradesh 482001
-                  </p>
-                </div>
-              </div>
 
-              <div className="flex items-start space-x-3">
-                <Phone className="h-6 w-6 text-pink-600 flex-shrink-0 mt-1" />
-                <div>
-                  <p className="font-medium text-gray-800">Phone</p>
-                  <a href="tel:08305335548" className="text-gray-600 hover:text-amber-600">
-                    083053 35548
-                  </a>
-                </div>
-              </div>
 
-              <div className="flex items-start space-x-3">
-                <Mail className="h-6 w-6 text-purple-600 flex-shrink-0 mt-1" />
-                <div>
-                  <p className="font-medium text-gray-800">Website</p>
-                  <a
-                    href="http://thevelorafamilysalon.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600 hover:text-amber-600"
-                  >
-                    thevelorafamilysalon.com
-                  </a>
-                </div>
-              </div>
-            </div>
+        <div className="mt-12 bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-8 md:p-12 animate-fadeInUp relative overflow-hidden">
+          {/* Background decorative elements */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute top-4 right-4 w-20 h-20 bg-amber-300 rounded-full blur-2xl animate-float"></div>
+            <div className="absolute bottom-4 left-4 w-16 h-16 bg-pink-300 rounded-full blur-2xl animate-float" style={{ animationDelay: '2s' }}></div>
           </div>
 
-          <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-8 animate-fadeInUp">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6">Opening Hours</h3>
-            <div className="space-y-3">
+          <div className="relative z-10">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-pink-500 px-6 py-2 rounded-full shadow-lg mb-4">
+                <Sparkles className="h-5 w-5 text-white" />
+                <span className="text-sm font-semibold text-white">Our Amenities</span>
+              </div>
+              <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Why Choose Velora?</h3>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                Experience our commitment to excellence with these premium amenities designed for your comfort
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                'Monday',
-                'Tuesday',
-                'Wednesday',
-                'Thursday',
-                'Friday',
-                'Saturday',
-                'Sunday',
-              ].map((day) => (
-                <div key={day} className="flex items-center justify-between py-2 border-b border-gray-200">
-                  <span className="font-medium text-gray-800">{day}</span>
-                  <div className="flex items-center space-x-2 text-gray-600">
-                    <Clock className="h-4 w-4 text-amber-600" />
-                    <span>11:00 AM - 9:00 PM</span>
+                {
+                  icon: '👩‍💼',
+                  title: 'Women-Owned Business',
+                  description: 'Proudly run by women entrepreneurs',
+                  color: 'from-pink-500 to-rose-500',
+                  bgColor: 'from-pink-50 to-rose-50',
+                },
+                {
+                  icon: '♿',
+                  title: 'Wheelchair Accessible',
+                  description: 'Full accessibility for all guests',
+                  color: 'from-blue-500 to-cyan-500',
+                  bgColor: 'from-blue-50 to-cyan-50',
+                },
+                {
+                  icon: '🎧',
+                  title: 'Assistive Hearing Loop',
+                  description: 'Advanced hearing assistance technology',
+                  color: 'from-purple-500 to-indigo-500',
+                  bgColor: 'from-purple-50 to-indigo-50',
+                },
+                {
+                  icon: '💇',
+                  title: 'On-Site Services',
+                  description: 'Complete salon services under one roof',
+                  color: 'from-amber-500 to-orange-500',
+                  bgColor: 'from-amber-50 to-orange-50',
+                },
+                {
+                  icon: '🚗',
+                  title: 'Free Parking',
+                  description: 'Convenient parking for all visitors',
+                  color: 'from-green-500 to-emerald-500',
+                  bgColor: 'from-green-50 to-emerald-50',
+                },
+                {
+                  icon: '💳',
+                  title: 'Digital Payments',
+                  description: 'Google Pay, UPI, and all major cards accepted',
+                  color: 'from-indigo-500 to-purple-500',
+                  bgColor: 'from-indigo-50 to-purple-50',
+                },
+                {
+                  icon: '💵',
+                  title: 'Cash Accepted',
+                  description: 'Traditional payment methods welcome',
+                  color: 'from-yellow-500 to-amber-500',
+                  bgColor: 'from-yellow-50 to-amber-50',
+                },
+                {
+                  icon: '🚪',
+                  title: 'Walk-ins Welcome',
+                  description: 'No appointment needed for most services',
+                  color: 'from-red-500 to-pink-500',
+                  bgColor: 'from-red-50 to-pink-50',
+                },
+              ].map((amenity, index) => (
+                <div
+                  key={index}
+                  className={`group bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 p-6 animate-fadeInUp border border-white/50 relative overflow-hidden`}
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  {/* Background gradient */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${amenity.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+
+                  {/* Decorative corner */}
+                  <div className={`absolute top-0 right-0 w-12 h-12 bg-gradient-to-bl ${amenity.color} opacity-10 rounded-bl-2xl`}></div>
+
+                  <div className="relative z-10 text-center">
+                    <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${amenity.color} text-white rounded-2xl shadow-lg mb-4 text-2xl transform group-hover:rotate-12 transition-transform duration-300`}>
+                      {amenity.icon}
+                    </div>
+                    <h4 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-gray-800 group-hover:to-gray-600 group-hover:bg-clip-text transition-all duration-300">
+                      {amenity.title}
+                    </h4>
+                    <p className="text-sm text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
+                      {amenity.description}
+                    </p>
                   </div>
+
+                  {/* Hover effect line */}
+                  <div className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r ${amenity.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`}></div>
                 </div>
               ))}
-              <div className="mt-4 p-3 bg-amber-50 rounded-lg">
-                <p className="text-sm text-amber-800">
-                  <strong>Special Hours:</strong>
-                  <br />
-                  Vijayadashami (2 Oct 2025): 11:00 AM - 9:00 PM
-                  <br />
-                  Diwali (20 Oct 2025): 11:00 AM - 6:00 PM
-                </p>
+            </div>
+
+            {/* Bottom CTA */}
+            <div className="text-center mt-12 animate-fadeInUp" style={{ animationDelay: '800ms' }}>
+              <p className="text-lg text-gray-600 mb-6">
+                Ready to experience the Velora difference?
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div className="px-6 py-3 bg-gradient-to-r from-amber-500 to-pink-500 text-white rounded-full text-sm font-semibold shadow-lg animate-pulse">
+                  🏆 Award-Winning Service Excellence
+                </div>
+                <div className="px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-full text-sm font-semibold shadow-lg animate-pulse" style={{ animationDelay: '1s' }}>
+                  ❤️ Customer Satisfaction Guaranteed
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div className="mt-12 bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-8 animate-fadeInUp">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Amenities & Features</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {[
-              'Women-Owned Business',
-              'Wheelchair Accessible Parking',
-              'Assistive Hearing Loop',
-              'On-Site Services',
-              'Free Parking',
-              'Google Pay Accepted',
-              'Cash Accepted',
-              'Walk-ins Welcome',
-            ].map((amenity, index) => (
-              <div
-                key={index}
-                className="flex items-center space-x-2 text-gray-700"
-              >
-                <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-pink-500 rounded-full" />
-                <span className="text-sm">{amenity}</span>
-              </div>
-            ))}
           </div>
         </div>
       </div>

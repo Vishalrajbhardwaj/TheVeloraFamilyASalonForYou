@@ -1,19 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Scissors, Sparkles, Clock, IndianRupee } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-
-interface Service {
-  id: string;
-  name: string;
-  description: string | null;
-  category: string;
-  price: number;
-  duration: number;
-  gender: string;
-}
+import mockServices, { Service } from '../lib/mockServices';
 
 interface ServicesPageProps {
   onBookService: (serviceId: string) => void;
+  onOpenList?: () => void;
 }
 
 export const ServicesPage = ({ onBookService }: ServicesPageProps) => {
@@ -36,25 +27,34 @@ export const ServicesPage = ({ onBookService }: ServicesPageProps) => {
   }, []);
 
   const loadServices = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('services')
-        .select('*')
-        .eq('is_active', true)
-        .order('category', { ascending: true });
-
-      if (error) throw error;
-      setServices(data || []);
-    } catch (error) {
-      console.error('Error loading services:', error);
-    } finally {
-      setLoading(false);
-    }
+    // load from shared mock
+    setServices(mockServices);
+    setLoading(false);
   };
 
-  const filteredServices = selectedCategory === 'all'
-    ? services
-    : services.filter(s => s.category === selectedCategory);
+  const filteredServices = (() => {
+    if (selectedCategory === 'all') return services;
+
+    // strict match first
+    const strict = services.filter(s => s.category === selectedCategory);
+    if (strict.length) return strict;
+
+    // fallback: keyword-based matching on name/description
+    const keywordsMap: Record<string, string[]> = {
+      hair: ['hair', 'locks', 'shampoo', 'cut', 'trim', 'style'],
+      skin: ['face', 'thread', 'wax', 'facial', 'cheek', 'forehead', 'chin', 'nose', 'lip', 'underarms'],
+      nail: ['nail', 'manicure', 'pedicure'],
+      spa: ['spa', 'massage', 'body', 'full body', 'back'],
+      makeup: ['makeup', 'bridal', 'blush', 'contour'],
+      grooming: ['groom', 'grooming']
+    };
+
+    const keywords = keywordsMap[selectedCategory] || [selectedCategory];
+    return services.filter(s => {
+      const hay = (s.name + ' ' + (s.description || '')).toLowerCase();
+      return keywords.some(k => hay.includes(k.toLowerCase()));
+    });
+  })();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-pink-50 to-purple-50 py-24 px-4">

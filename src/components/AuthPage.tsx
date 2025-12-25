@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Mail, Lock, User, Phone, Sparkles } from 'lucide-react';
+import { Mail, Lock, User, Phone } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 interface AuthPageProps {
-  onSuccess: () => void;
+  onSuccess: (destination?: string) => void;
 }
 
 export const AuthPage = ({ onSuccess }: AuthPageProps) => {
@@ -25,9 +25,10 @@ export const AuthPage = ({ onSuccess }: AuthPageProps) => {
 
     try {
       if (isLogin) {
-        const { error } = await signIn(formData.email, formData.password);
+        const { error, profile } = await signIn(formData.email, formData.password);
         if (error) throw error;
-        onSuccess();
+        // All authenticated users go to admin dashboard with role-based access
+        onSuccess('admin');
       } else {
         const { error } = await signUp(
           formData.email,
@@ -57,7 +58,7 @@ export const AuthPage = ({ onSuccess }: AuthPageProps) => {
           <div className="text-center mb-8">
             <div className="mb-4 flex justify-center">
               <img
-                src="https://i.imgur.com/8xZ9YqK.png"
+                src="/velora-logo1.png"
                 alt="The Velora Logo"
                 className="h-20 w-auto object-contain animate-bounce-slow"
               />

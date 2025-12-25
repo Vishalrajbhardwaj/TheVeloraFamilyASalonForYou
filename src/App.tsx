@@ -1,18 +1,22 @@
 import { useState } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Navbar } from './components/Navbar';
+import { Footer } from './components/Footer';
 import { HomePage } from './components/HomePage';
 import { ServicesPage } from './components/ServicesPage';
+import { ServicesList } from './components/ServicesList';
 import { BookingPage } from './components/BookingPage';
 import { AuthPage } from './components/AuthPage';
 import { MyBookingsPage } from './components/MyBookingsPage';
 import { AdminDashboard } from './components/AdminDashboard';
 import { AboutPage } from './components/AboutPage';
+import { ContactPage } from './components/ContactPage';
+import { PhotoVideoPage } from './components/PhotoVideoPage';
 
 function AppContent() {
   const [currentPage, setCurrentPage] = useState<string>('home');
   const [selectedServiceId, setSelectedServiceId] = useState<string | undefined>();
-  const { loading } = useAuth();
+  const { loading, profile } = useAuth();
 
   const handleBookService = (serviceId: string) => {
     setSelectedServiceId(serviceId);
@@ -43,14 +47,20 @@ function AppContent() {
         <HomePage
           onBookNow={() => setCurrentPage('booking')}
           onNavigateServices={() => setCurrentPage('services')}
+          onNavigateGallery={() => setCurrentPage('photo-video')}
         />
       )}
-      {currentPage === 'services' && <ServicesPage onBookService={handleBookService} />}
+      {currentPage === 'services' && <ServicesPage onBookService={handleBookService} onOpenList={() => setCurrentPage('service-list')} />}
+      {currentPage === 'service-list' && <ServicesList onBookService={handleBookService} />}
       {currentPage === 'booking' && <BookingPage preSelectedServiceId={selectedServiceId} />}
-      {currentPage === 'auth' && <AuthPage onSuccess={() => setCurrentPage('home')} />}
+      {currentPage === 'auth' && <AuthPage onSuccess={(dest) => setCurrentPage(dest || 'home')} />}
       {currentPage === 'my-bookings' && <MyBookingsPage />}
-      {currentPage === 'admin' && <AdminDashboard />}
+      {currentPage === 'admin' && (profile?.role === 'Admin' ? <AdminDashboard /> : <div className="min-h-screen flex items-center justify-center"><p className="text-red-600">Access denied. Admin privileges required.</p></div>)}
       {currentPage === 'about' && <AboutPage />}
+      {currentPage === 'contact' && <ContactPage />}
+      {currentPage === 'photo-video' && <PhotoVideoPage />}
+
+      <Footer />
     </div>
   );
 }
