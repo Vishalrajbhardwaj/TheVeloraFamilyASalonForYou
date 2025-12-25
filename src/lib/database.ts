@@ -1,6 +1,3 @@
-// Supabase client removed — provide a harmless stub so imports don't break
-export const supabase: null = null;
-
 export type Database = {
   public: {
     Tables: {

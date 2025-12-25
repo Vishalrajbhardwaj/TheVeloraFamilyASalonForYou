@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, X, Scissors, LogOut, User, Calendar } from 'lucide-react';
+import { Menu, X, LogOut, Calendar } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 interface NavbarProps {
@@ -17,7 +17,7 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
   };
 
   return (
-    <nav className="bg-white shadow-lg fixed w-full top-0 z-50">
+    <nav className="bg-gray-800 shadow-lg fixed w-full top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
@@ -25,14 +25,16 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
               onClick={() => onNavigate('home')}
               className="flex items-center space-x-3 group"
             >
-              <div className="bg-gradient-to-r from-amber-500 to-pink-500 p-2 rounded-lg transform group-hover:scale-110 transition-transform duration-300">
-                <Scissors className="h-6 w-6 text-white" />
-              </div>
+              <img
+                src="/velora-logo1.png"
+                alt="Logo"
+                className="h-16 w-16 object-contain"
+              />
               <div>
                 <h1 className="text-xl font-bold bg-gradient-to-r from-amber-600 to-pink-600 bg-clip-text text-transparent">
                   The Velora
                 </h1>
-                <p className="text-xs text-gray-600 italic">A Family Salon for U</p>
+                <p className="text-xs text-gray-300 italic">A Family Salon for U</p>
               </div>
             </button>
           </div>
@@ -43,6 +45,12 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
               active={currentPage === 'home'}
             >
               Home
+            </NavLink>
+            <NavLink
+              onClick={() => onNavigate('about')}
+              active={currentPage === 'about'}
+            >
+              About
             </NavLink>
             <NavLink
               onClick={() => onNavigate('services')}
@@ -57,15 +65,21 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
               Book Now
             </NavLink>
             <NavLink
-              onClick={() => onNavigate('about')}
-              active={currentPage === 'about'}
+              onClick={() => onNavigate('photo-video')}
+              active={currentPage === 'photo-video'}
             >
-              About
+              Gallery
+            </NavLink>
+            <NavLink
+              onClick={() => onNavigate('contact')}
+              active={currentPage === 'contact'}
+            >
+              Contact
             </NavLink>
 
             {user ? (
               <div className="flex items-center space-x-4">
-                {profile?.role === 'admin' && (
+                {profile?.role === 'Admin' && (
                   <button
                     onClick={() => onNavigate('admin')}
                     className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300"
@@ -75,14 +89,14 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
                 )}
                 <button
                   onClick={() => onNavigate('my-bookings')}
-                  className="flex items-center space-x-2 text-gray-700 hover:text-amber-600 transition-colors"
+                  className="flex items-center space-x-2 text-gray-200 hover:text-amber-600 transition-colors"
                 >
                   <Calendar className="h-5 w-5" />
                   <span>My Bookings</span>
                 </button>
                 <button
                   onClick={handleSignOut}
-                  className="flex items-center space-x-2 text-gray-700 hover:text-red-600 transition-colors"
+                  className="flex items-center space-x-2 text-gray-200 hover:text-red-600 transition-colors"
                 >
                   <LogOut className="h-5 w-5" />
                   <span>Logout</span>
@@ -101,7 +115,7 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 hover:text-amber-600 transition-colors"
+              className="text-gray-200 hover:text-amber-600 transition-colors"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -124,14 +138,15 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
             <MobileNavLink onClick={() => { onNavigate('about'); setIsOpen(false); }}>
               About
             </MobileNavLink>
+            <MobileNavLink onClick={() => { onNavigate('photo-video'); setIsOpen(false); }}>
+              Photo & Video
+            </MobileNavLink>
 
             {user ? (
               <>
-                {profile?.role === 'admin' && (
-                  <MobileNavLink onClick={() => { onNavigate('admin'); setIsOpen(false); }}>
-                    Admin Dashboard
-                  </MobileNavLink>
-                )}
+                <MobileNavLink onClick={() => { onNavigate('admin'); setIsOpen(false); }}>
+                  Dashboard
+                </MobileNavLink>
                 <MobileNavLink onClick={() => { onNavigate('my-bookings'); setIsOpen(false); }}>
                   My Bookings
                 </MobileNavLink>
@@ -157,7 +172,7 @@ const NavLink = ({ children, onClick, active }: { children: React.ReactNode; onC
     className={`relative text-sm font-medium transition-colors ${
       active
         ? 'text-amber-600'
-        : 'text-gray-700 hover:text-amber-600'
+        : 'text-gray-200 hover:text-amber-600'
     }`}
   >
     {children}

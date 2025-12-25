@@ -1,0 +1,1 @@
+-- Migration cleared: Supabase migration removed because Supabase integration was removed from the project.

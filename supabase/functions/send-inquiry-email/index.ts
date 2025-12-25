@@ -1,0 +1,1 @@
+// send-inquiry-email function removed — Supabase functions are no longer used in this project.

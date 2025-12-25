@@ -72,7 +72,6 @@ CREATE TABLE IF NOT EXISTS profiles (
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 
 -- Create services table
-CREATE TABLE IF NOT EXISTS services (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   name text NOT NULL,
   description text,
@@ -82,7 +81,6 @@ CREATE TABLE IF NOT EXISTS services (
   gender text NOT NULL DEFAULT 'unisex' CHECK (gender IN ('male', 'female', 'unisex')),
   is_active boolean DEFAULT true,
   created_at timestamptz DEFAULT now()
-);
 
 ALTER TABLE services ENABLE ROW LEVEL SECURITY;
 
@@ -94,58 +92,7 @@ CREATE TABLE IF NOT EXISTS staff (
   is_available boolean DEFAULT true,
   created_at timestamptz DEFAULT now()
 );
-
-ALTER TABLE staff ENABLE ROW LEVEL SECURITY;
-
--- Create bookings table
-CREATE TABLE IF NOT EXISTS bookings (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id uuid REFERENCES profiles(id) ON DELETE SET NULL,
-  service_id uuid REFERENCES services(id) ON DELETE CASCADE NOT NULL,
-  staff_id uuid REFERENCES staff(id) ON DELETE SET NULL,
-  booking_date date NOT NULL,
-  booking_time time NOT NULL,
-  status text NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'completed', 'cancelled')),
-  customer_name text NOT NULL,
-  customer_phone text NOT NULL,
-  customer_email text NOT NULL,
-  notes text,
-  created_at timestamptz DEFAULT now(),
-  updated_at timestamptz DEFAULT now()
-);
-
-ALTER TABLE bookings ENABLE ROW LEVEL SECURITY;
-
--- RLS Policies for profiles
-CREATE POLICY "Users can view own profile"
-  ON profiles FOR SELECT
-  TO authenticated
-  USING (auth.uid() = id);
-
-CREATE POLICY "Users can update own profile"
-  ON profiles FOR UPDATE
-  TO authenticated
-  USING (auth.uid() = id)
-  WITH CHECK (auth.uid() = id);
-
-CREATE POLICY "Admins can view all profiles"
-  ON profiles FOR SELECT
-  TO authenticated
-  USING (
-    EXISTS (
-      SELECT 1 FROM profiles
-      WHERE profiles.id = auth.uid()
-      AND profiles.role = 'admin'
-    )
-  );
-
--- RLS Policies for services
-CREATE POLICY "Anyone can view active services"
-  ON services FOR SELECT
-  USING (is_active = true);
-
-CREATE POLICY "Admins can manage services"
-  ON services FOR ALL
+-- Migration cleared: Supabase schema migration removed because Supabase integration was removed from the project.
   TO authenticated
   USING (
     EXISTS (
@@ -154,7 +101,6 @@ CREATE POLICY "Admins can manage services"
       AND profiles.role = 'admin'
     )
   )
-  WITH CHECK (
     EXISTS (
       SELECT 1 FROM profiles
       WHERE profiles.id = auth.uid()
