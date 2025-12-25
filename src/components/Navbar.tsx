@@ -26,8 +26,8 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
               className="flex items-center space-x-3 group"
             >
               <img
-                src="velora-logo1.png"
-                alt="Logo"
+                src="/velora-logo1.png"
+                alt="The Velora Family Logo"
                 className="h-16 w-16 object-contain"
               />
               <div>
