@@ -5,11 +5,12 @@ export interface Staff {
 }
 
 const STAFF_LIST: Staff[] = [
-  { id: 'st1', name: 'Asha', specialization: 'Hair' },
-  { id: 'st2', name: 'Ravi', specialization: 'Grooming' },
-  { id: 'st3', name: 'SHIVANGI', specialization: 'Makeup' },
-  { id: 'st4', name: 'HEMANT', specialization: 'Styling' },
+  { id: 'st1', name: 'ANJALI', specialization: 'Beautician , Hair & MakeUp Artist' },
+  { id: 'st2', name: 'Hemant', specialization: 'UNisex Hair Artist' },
+  { id: 'st3', name: 'SHIVANGI', specialization: 'Hair, Beauty , MakeUp & Nail' },
+  { id: 'st4', name: 'VARSHA', specialization: 'Beautician , Hair & MakeUp Artist' },
 ];
+
 
 export const fetchStaff = async (): Promise<Staff[]> => {
   // simulate async fetch
