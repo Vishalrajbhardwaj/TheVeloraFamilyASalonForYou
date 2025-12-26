@@ -5,10 +5,12 @@ export interface Staff {
 }
 
 const STAFF_LIST: Staff[] = [
-  { id: 'st1', name: 'ANJALI', specialization: 'Beautician , Hair & MakeUp Artist' },
+  { id: 'st1', name: 'SHIVANGI', specialization: 'Hair, Beauty , MakeUp & Nail' },
   { id: 'st2', name: 'Hemant', specialization: 'UNisex Hair Artist' },
-  { id: 'st3', name: 'SHIVANGI', specialization: 'Hair, Beauty , MakeUp & Nail' },
+  { id: 'st3', name: 'ANJALI', specialization: 'Beautician , Hair & MakeUp Artist' },
   { id: 'st4', name: 'VARSHA', specialization: 'Beautician , Hair & MakeUp Artist' },
+  { id: 'st5', name: 'DEPANSHU', specialization: 'Grooming' },
+
 ];
 
 

@@ -1,4 +1,5 @@
-import { Award, Users, Sparkles, Heart } from 'lucide-react';
+import { Award, Users, Sparkles, Heart, Instagram, Facebook } from 'lucide-react';
+import STAFF_LIST from '../data/staff';
 
 export const AboutPage = () => {
 
@@ -247,6 +248,59 @@ export const AboutPage = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Meet Our Team Section */}
+        <div className="mt-12 bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-8 md:p-12 animate-fadeInUp">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-pink-500 px-6 py-2 rounded-full shadow-lg mb-4">
+              <Users className="h-5 w-5 text-white" />
+              <span className="text-sm font-semibold text-white">Meet Our Team</span>
+            </div>
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Expert Professionals</h3>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Meet the talented team behind The Velora Family Salon, dedicated to providing exceptional beauty and grooming services.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8">
+            {STAFF_LIST.map((staff, index) => (
+              <div
+                key={staff.id}
+                className="group h-96 w-full [perspective:1000px] animate-fadeInUp"
+                style={{ animationDelay: `${index * 200}ms` }}
+              >
+                <div className="relative h-full w-full rounded-2xl shadow-lg [transform-style:preserve-3d] transition-transform duration-700 group-hover:[transform:rotateY(180deg)]">
+                  {/* Front Side */}
+                  <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-2xl overflow-hidden">
+                    <img
+                      src={
+                        staff.name === 'Hemant'
+                          ? 'https://randomuser.me/api/portraits/men/1.jpg'
+                          : `https://randomuser.me/api/portraits/women/${staff.name === 'ANJALI' ? 1 : staff.name === 'SHIVANGI' ? 2 : 3}.jpg`
+                      }
+                      alt={staff.name}
+                      className="w-full h-3/4 object-cover"
+                    />
+                    <div className="h-1/4 bg-white flex flex-col items-center justify-center space-y-2">
+                      <a href="#" className="text-pink-500 hover:text-pink-600 transition-colors">
+                        <Instagram className="h-6 w-6" />
+                      </a>
+                      <a href="#" className="text-blue-500 hover:text-blue-600 transition-colors">
+                        <Facebook className="h-6 w-6" />
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Back Side */}
+                  <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl bg-gradient-to-br from-amber-100 to-pink-100 flex flex-col items-center justify-center p-6 text-center">
+                    <h4 className="text-2xl font-bold text-gray-800 mb-2">{staff.name}</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed">{staff.specialization}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
