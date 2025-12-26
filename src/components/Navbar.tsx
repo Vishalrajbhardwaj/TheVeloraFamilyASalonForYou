@@ -26,7 +26,7 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
               className="flex items-center space-x-3 group"
             >
               <img
-                src="/velora-logo1.png"
+                src="velora-logo1.png"
                 alt="Logo"
                 className="h-16 w-16 object-contain"
               />
@@ -102,14 +102,7 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
                   <span>Logout</span>
                 </button>
               </div>
-            ) : (
-              <button
-                onClick={() => onNavigate('auth')}
-                className="px-6 py-2 bg-gradient-to-r from-amber-500 to-pink-500 text-white rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300"
-              >
-                Login / Sign Up
-              </button>
-            )}
+            ) : null}
           </div>
 
           <div className="md:hidden flex items-center">
@@ -154,11 +147,7 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
                   Logout
                 </MobileNavLink>
               </>
-            ) : (
-              <MobileNavLink onClick={() => { onNavigate('auth'); setIsOpen(false); }}>
-                Login / Sign Up
-              </MobileNavLink>
-            )}
+            ) : null}
           </div>
         </div>
       )}

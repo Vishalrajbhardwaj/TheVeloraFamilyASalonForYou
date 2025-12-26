@@ -58,7 +58,7 @@ export const AuthPage = ({ onSuccess }: AuthPageProps) => {
           <div className="text-center mb-8">
             <div className="mb-4 flex justify-center">
               <img
-                src="/velora-logo1.png"
+                src="velora-logo1.png"
                 alt="The Velora Logo"
                 className="h-20 w-auto object-contain animate-bounce-slow"
               />
