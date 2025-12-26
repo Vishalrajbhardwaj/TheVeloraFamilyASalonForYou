@@ -90,7 +90,7 @@ export const AboutPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center p-4 bg-gradient-to-br from-amber-50 to-pink-50 rounded-xl">
                 <h4 className="font-bold text-gray-800 mb-2">Experienced Team</h4>
-                <p className="text-sm text-gray-600">Over 10+ years of combined experience in beauty and grooming</p>
+                <p className="text-sm text-gray-600">Over 5+ years of combined experience in beauty and grooming</p>
               </div>
               <div className="text-center p-4 bg-gradient-to-br from-pink-50 to-purple-50 rounded-xl">
                 <h4 className="font-bold text-gray-800 mb-2">Quality Products</h4>
