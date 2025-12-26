@@ -12,21 +12,15 @@ export const ContactPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleInquirySubmit = async (e: React.FormEvent) => {
+  const handleInquirySubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      // Simulate successful submission locally (no Supabase)
-      await new Promise((res) => setTimeout(res, 400));
-      setIsSubmitted(true);
-      setInquiryForm({ name: '', email: '', phone: '', subject: '', message: '' });
-      setTimeout(() => setIsSubmitted(false), 5000);
-    } catch (error: any) {
-      console.error('Error submitting inquiry:', error);
-      alert('Failed to send inquiry. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
+    const { name, email, phone, subject, message } = inquiryForm;
+    const body = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`;
+    const mailtoURL = `mailto:theveloraafamilysalonforu@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoURL;
+    setIsSubmitted(true);
+    setInquiryForm({ name: '', email: '', phone: '', subject: '', message: '' });
+    setTimeout(() => setIsSubmitted(false), 5000);
   };
 
   return (
@@ -208,20 +202,10 @@ export const ContactPage = () => {
 
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full py-4 bg-gradient-to-r from-amber-500 to-pink-500 text-white rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                className="w-full py-4 bg-gradient-to-r from-amber-500 to-pink-500 text-white rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2"
               >
-                {isSubmitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                    <span>Sending...</span>
-                  </>
-                ) : (
-                  <>
-                    <Send className="h-5 w-5" />
-                    <span>Send Inquiry</span>
-                  </>
-                )}
+                <Send className="h-5 w-5" />
+                <span>Send Inquiry</span>
               </button>
             </form>
           </div>
