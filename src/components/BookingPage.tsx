@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Calendar, Clock, User, Phone, Mail, MessageSquare, Check } from 'lucide-react';
+import { Calendar, Clock, User, MessageSquare, Check } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { fetchStaff, Staff } from '../data/staff';
-import mockServices from '../lib/mockServices';
+import { mockServices } from '../lib/mockServices';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_blue.css';
 
@@ -33,8 +33,6 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
     date: '',
     time: '',
     customerName: '',
-    customerPhone: '',
-    customerEmail: '',
     notes: '',
   });
 
@@ -49,13 +47,11 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
   }, []);
 
   useEffect(() => {
-    // Prefill data only when user is logged in and reaches step 3
-    if (step === 3 && user && profile) {
+    // Prefill data only when user is logged in and reaches step 1
+    if (step === 1 && user && profile) {
       setBookingData(prev => ({
         ...prev,
         customerName: profile.full_name || prev.customerName,
-        customerPhone: profile.phone || prev.customerPhone,
-        customerEmail: user.email || prev.customerEmail,
       }));
     }
   }, [step, profile, user]);
@@ -86,8 +82,6 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
         `Date: ${bookingData.date || '-'}`,
         `Time: ${bookingData.time || '-'}`,
         `Customer Name: ${bookingData.customerName || '-'}`,
-        `Customer Phone: ${bookingData.customerPhone || '-'}`,
-        `Customer Email: ${bookingData.customerEmail || '-'}`,
         `Notes: ${bookingData.notes || '-'}`,
       ].filter(Boolean).join('\n');
 
@@ -136,8 +130,6 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
                 date: '',
                 time: '',
                 customerName: '',
-                customerPhone: '',
-                customerEmail: '',
                 notes: '',
               });
               window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -162,7 +154,7 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
         </div>
 
         <div className="flex justify-center mb-8">
-          {[1, 2, 3].map((s) => (
+          {[1, 2].map((s) => (
             <div key={s} className="flex items-center">
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all duration-300 ${
@@ -173,7 +165,7 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
               >
                 {s}
               </div>
-              {s < 3 && (
+              {s < 2 && (
                 <div
                   className={`w-16 h-1 mx-2 transition-all duration-300 ${
                     step > s ? 'bg-gradient-to-r from-amber-500 to-pink-500' : 'bg-gray-200'
@@ -221,6 +213,18 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
                       </option>
                     ))}
                   </select>
+                </div>
+
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Full Name"
+                    value={bookingData.customerName}
+                    onChange={(e) => setBookingData({ ...bookingData, customerName: e.target.value })}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    required
+                  />
                 </div>
 
                 <button
@@ -281,6 +285,17 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
                   </div>
                 </div>
 
+                <div className="relative">
+                  <MessageSquare className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <textarea
+                    placeholder="Additional notes (optional)"
+                    value={bookingData.notes}
+                    onChange={(e) => setBookingData({ ...bookingData, notes: e.target.value })}
+                    rows={3}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </div>
+
                 <div className="flex gap-4">
                   <button
                     type="button"
@@ -290,12 +305,11 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
                     Back
                   </button>
                   <button
-                    type="button"
-                    onClick={() => setStep(3)}
-                    disabled={!bookingData.date || !bookingData.time}
-                    className="flex-1 py-3 bg-gradient-to-r from-amber-500 to-pink-500 text-white rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    type="submit"
+                    disabled={loading || !bookingData.date || !bookingData.time}
+                    className="flex-1 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Next Step
+                    {loading ? 'Booking...' : 'Confirm Booking'}
                   </button>
                 </div>
               </div>
@@ -317,36 +331,7 @@ export const BookingPage = ({ preSelectedServiceId }: BookingPageProps) => {
                   />
                 </div>
 
-                <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <input
-                    type="tel"
-                    inputMode="numeric"
-                    pattern="\d{10}"
-                    placeholder="Phone Number"
-                    value={bookingData.customerPhone}
-                    onChange={(e) => {
-                      const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
-                      setBookingData({ ...bookingData, customerPhone: digits });
-                    }}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    required
-                  />
-                  <small className="text-xs text-gray-500 block mt-1">Enter 10 digit mobile number</small>
-                </div>
-
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <input
-                    type="email"
-                    placeholder="Email Address"
-                    value={bookingData.customerEmail}
-                    onChange={(e) => setBookingData({ ...bookingData, customerEmail: e.target.value })}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    required
-                  />
-                </div>
-
+                
                 <div className="relative">
                   <MessageSquare className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                   <textarea

@@ -1,25 +1,37 @@
 import { useEffect, useState } from 'react';
-import { Scissors, Sparkles, Clock, IndianRupee } from 'lucide-react';
-import mockServices, { Service } from '../lib/mockServices';
+import { Scissors, Sparkles, Clock, IndianRupee, Search } from 'lucide-react';
+import { mockServices, Service } from '../lib/mockServices';
 
 interface ServicesPageProps {
   onBookService: (serviceId: string) => void;
   onOpenList?: () => void;
+  selectedGender?: string;
 }
 
-export const ServicesPage = ({ onBookService }: ServicesPageProps) => {
+export const ServicesPage = ({ onBookService, selectedGender }: ServicesPageProps) => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const categories = [
-    { id: 'all', name: 'All Services', icon: '✨' },
-    { id: 'hair', name: 'Hair Care', icon: '💇' },
-    { id: 'skin', name: 'Skin Care', icon: '✨' },
-    { id: 'makeup', name: 'Makeup', icon: '💄' },
-    { id: 'nail', name: 'Nail Care', icon: '💅' },
-    { id: 'spa', name: 'Spa', icon: '🧖' },
-    { id: 'grooming', name: 'Grooming', icon: '🪒' },
+    { id: 'all', name: 'All Service', icon: '✨' },
+    { id: 'bleach', name: 'BLEACH', icon: '🧴' },
+    { id: 'body-face-polishing', name: 'BODY & FACE POLISHING', icon: '✨' },
+    { id: 'clean-up', name: 'CLEAN-UP', icon: '🧽' },
+    { id: 'facial', name: 'FACIAL', icon: '💆' },
+    { id: 'hair-care', name: 'HAIR- CARE', icon: '💇' },
+    { id: 'hair-color', name: 'HAIR COLOR', icon: '🎨' },
+    { id: 'hair-cut-men', name: 'HAIR CUT (Men)', icon: '✂️' },
+    { id: 'hair-cut-women', name: 'HAIR CUT (Women)', icon: '✂️' },
+    { id: 'hair-spa', name: 'HAIR SPA', icon: '🧖' },
+    { id: 'hair-treatments', name: 'HAIR TREATMENTS', icon: '🧴' },
+    { id: 'hair-style', name: 'Hair Style', icon: '💇‍♀️' },
+    { id: 'makeup', name: 'MAKEUP', icon: '💄' },
+    { id: 'manicure-pedicure', name: 'MENICURE & PEDICURE', icon: '💅' },
+    { id: 'nail-art', name: 'NAIL ART', icon: '🎨' },
+    { id: 'shampoo', name: 'SHAMPOO', icon: '🧴' },
+    { id: 'waxing', name: 'WAXING', icon: '🕯️' },
   ];
 
   useEffect(() => {
@@ -33,27 +45,66 @@ export const ServicesPage = ({ onBookService }: ServicesPageProps) => {
   };
 
   const filteredServices = (() => {
-    if (selectedCategory === 'all') return services;
+    let filtered = services;
+
+    // Filter by gender if selected
+    if (selectedGender) {
+      filtered = filtered.filter(s => s.gender === selectedGender || s.gender === 'unisex');
+    }
+
+    if (selectedCategory === 'all') {
+      // For 'all' category, apply search directly
+      if (searchQuery.trim()) {
+        const query = searchQuery.toLowerCase().trim();
+        filtered = filtered.filter(s => {
+          const hay = (s.name + ' ' + (s.description || '')).toLowerCase();
+          return hay.includes(query);
+        });
+      }
+      return filtered;
+    }
 
     // strict match first
-    const strict = services.filter(s => s.category === selectedCategory);
-    if (strict.length) return strict;
+    let categoryFiltered = filtered.filter(s => s.category === selectedCategory);
 
-    // fallback: keyword-based matching on name/description
-    const keywordsMap: Record<string, string[]> = {
-      hair: ['hair', 'locks', 'shampoo', 'cut', 'trim', 'style'],
-      skin: ['face', 'thread', 'wax', 'facial', 'cheek', 'forehead', 'chin', 'nose', 'lip', 'underarms'],
-      nail: ['nail', 'manicure', 'pedicure'],
-      spa: ['spa', 'massage', 'body', 'full body', 'back'],
-      makeup: ['makeup', 'bridal', 'blush', 'contour'],
-      grooming: ['groom', 'grooming']
-    };
+    // If no strict matches, use keyword-based matching
+    if (!categoryFiltered.length) {
+      const keywordsMap: Record<string, string[]> = {
+        'hair-care': ['hair', 'locks', 'shampoo', 'cut', 'trim', 'style', 'threading'],
+        'facial': ['face', 'facial', 'cheek', 'forehead', 'chin', 'nose', 'lip'],
+        'body-face-polishing': ['polish', 'body', 'face', 'skin'],
+        'clean-up': ['clean', 'cleanup', 'teenagers', 'whitening', 'acne', 'under eye'],
+        'hair-color': ['color', 'touch up', 'global', 'balayage', 'highlights'],
+        'hair-cut-men': ['men', 'male', 'basic cut', 'fade', 'pompadour', 'advanced cut', 'kids'],
+        'hair-cut-women': ['women', 'female', 'basic cut', 'u cut', 'v cut', 'layers'],
+        'hair-spa': ['spa', 'moisturizing', 'protein', 'detox', 'hair fall', 'anti dandruff', 'korean'],
+        'hair-treatments': ['treatment', 'olaplex', 'nanoplastia', 'botox', 'botoplex', 'keratin', 'rebonding', 'smoothening'],
+        'hair-style': ['style', 'hair style'],
+        'makeup': ['makeup', 'bridal', 'hd', 'basic', 'saree', 'dupatta', 'draping'],
+        'manicure-pedicure': ['manicure', 'pedicure', 'basic', 'spa', 'crystal', 'deluxe', 'luxury', 'velora'],
+        'nail-art': ['nail art', 'glitter', 'chrome', 'marble', '3d', 'jewellery', 'gel', 'acrylic', 'extensions', 'removal'],
+        'shampoo': ['shampoo', 'hair wash', 'qod', 'olaplex', 'l\'oréal', 'schwarzkopf'],
+        'waxing': ['wax', 'bikini', 'full body', 'underarms', 'hand', 'leg', 'front', 'back', 'chest', 'half', 'full'],
+        'bleach': ['bleach', 'd-tan', 'face', 'neck', 'hand', 'front', 'back', 'leg', 'body']
+      };
 
-    const keywords = keywordsMap[selectedCategory] || [selectedCategory];
-    return services.filter(s => {
-      const hay = (s.name + ' ' + (s.description || '')).toLowerCase();
-      return keywords.some(k => hay.includes(k.toLowerCase()));
-    });
+      const keywords = keywordsMap[selectedCategory] || [selectedCategory];
+      categoryFiltered = filtered.filter(s => {
+        const hay = (s.name + ' ' + (s.description || '')).toLowerCase();
+        return keywords.some(k => hay.includes(k.toLowerCase()));
+      });
+    }
+
+    // Apply search filter within the category results
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      categoryFiltered = categoryFiltered.filter(s => {
+        const hay = (s.name + ' ' + (s.description || '')).toLowerCase();
+        return hay.includes(query);
+      });
+    }
+
+    return categoryFiltered;
   })();
 
   return (
@@ -74,22 +125,46 @@ export const ServicesPage = ({ onBookService }: ServicesPageProps) => {
           </p>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 ${
-                selectedCategory === cat.id
-                  ? 'bg-gradient-to-r from-amber-500 to-pink-500 text-white shadow-lg'
-                  : 'bg-white text-gray-700 hover:shadow-md'
-              }`}
-            >
-              <span className="mr-2">{cat.icon}</span>
-              {cat.name}
-            </button>
-          ))}
+        {/* Search Bar */}
+        <div className="max-w-md mx-auto mb-8">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search services..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-4 py-3 pl-12 pr-12 text-gray-700 bg-white/80 backdrop-blur-sm border border-gray-300 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300"
+            />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                ✕
+              </button>
+            )}
+          </div>
         </div>
+
+        {!searchQuery.trim() && (
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 ${
+                  selectedCategory === cat.id
+                    ? 'bg-gradient-to-r from-amber-500 to-pink-500 text-white shadow-lg'
+                    : 'bg-white text-gray-700 hover:shadow-md'
+                }`}
+              >
+                <span className="mr-2">{cat.icon}</span>
+                {cat.name}
+              </button>
+            ))}
+          </div>
+        )}
 
         {loading ? (
           <div className="flex justify-center items-center h-64">

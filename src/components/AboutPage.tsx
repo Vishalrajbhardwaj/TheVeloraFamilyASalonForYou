@@ -275,22 +275,10 @@ export const AboutPage = () => {
                   {/* Front Side */}
                   <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-2xl overflow-hidden">
                     <img
-                      src={
-                        staff.name === 'Hemant'
-                          ? 'https://randomuser.me/api/portraits/men/1.jpg'
-                          : `https://randomuser.me/api/portraits/women/${staff.name === 'ANJALI' ? 1 : staff.name === 'SHIVANGI' ? 2 : 3}.jpg`
-                      }
+                      src={staff.photo || 'https://randomuser.me/api/portraits/men/1.jpg'}
                       alt={staff.name}
-                      className="w-full h-3/4 object-cover"
+                      className="w-full h-full object-cover"
                     />
-                    <div className="h-1/4 bg-white flex flex-col items-center justify-center space-y-2">
-                      <a href="#" className="text-pink-500 hover:text-pink-600 transition-colors">
-                        <Instagram className="h-6 w-6" />
-                      </a>
-                      <a href="#" className="text-blue-500 hover:text-blue-600 transition-colors">
-                        <Facebook className="h-6 w-6" />
-                      </a>
-                    </div>
                   </div>
 
                   {/* Back Side */}
