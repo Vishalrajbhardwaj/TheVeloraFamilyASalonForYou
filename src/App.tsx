@@ -23,12 +23,19 @@ function AppContent() {
     setCurrentPage('booking');
   };
 
+  const [selectedGender, setSelectedGender] = useState<string | undefined>();
+
   const handleNavigate = (page: string) => {
     setCurrentPage(page);
     if (page !== 'booking') {
       setSelectedServiceId(undefined);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleNavigateServices = (gender: string) => {
+    setSelectedGender(gender);
+    setCurrentPage('services');
   };
 
   if (loading) {
@@ -46,11 +53,11 @@ function AppContent() {
       {currentPage === 'home' && (
         <HomePage
           onBookNow={() => setCurrentPage('booking')}
-          onNavigateServices={() => setCurrentPage('services')}
+          onNavigateServices={handleNavigateServices}
           onNavigateGallery={() => setCurrentPage('photo-video')}
         />
       )}
-      {currentPage === 'services' && <ServicesPage onBookService={handleBookService} onOpenList={() => setCurrentPage('service-list')} />}
+      {currentPage === 'services' && <ServicesPage onBookService={handleBookService} onOpenList={() => setCurrentPage('service-list')} selectedGender={selectedGender} />}
       {currentPage === 'service-list' && <ServicesList onBookService={handleBookService} />}
       {currentPage === 'booking' && <BookingPage preSelectedServiceId={selectedServiceId} />}
       {currentPage === 'auth' && <AuthPage onSuccess={(dest) => setCurrentPage(dest || 'home')} />}
@@ -60,7 +67,7 @@ function AppContent() {
       {currentPage === 'contact' && <ContactPage />}
       {currentPage === 'photo-video' && <PhotoVideoPage />}
 
-      <Footer />
+      <Footer onNavigate={handleNavigate} />
     </div>
   );
 }

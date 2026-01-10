@@ -122,17 +122,20 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
             <MobileNavLink onClick={() => { onNavigate('home'); setIsOpen(false); }}>
               Home
             </MobileNavLink>
+            <MobileNavLink onClick={() => { onNavigate('about'); setIsOpen(false); }}>
+              About
+            </MobileNavLink>
             <MobileNavLink onClick={() => { onNavigate('services'); setIsOpen(false); }}>
               Services
             </MobileNavLink>
             <MobileNavLink onClick={() => { onNavigate('booking'); setIsOpen(false); }}>
               Book Now
             </MobileNavLink>
-            <MobileNavLink onClick={() => { onNavigate('about'); setIsOpen(false); }}>
-              About
-            </MobileNavLink>
             <MobileNavLink onClick={() => { onNavigate('photo-video'); setIsOpen(false); }}>
-              Photo & Video
+              Gallery
+            </MobileNavLink>
+            <MobileNavLink onClick={() => { onNavigate('contact'); setIsOpen(false); }}>
+              Contact
             </MobileNavLink>
 
             {user ? (

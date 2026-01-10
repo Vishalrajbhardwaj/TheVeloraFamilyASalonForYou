@@ -1,5 +1,5 @@
 import React from 'react';
-import mockServices, { Service } from '../lib/mockServices';
+import { mockServices, Service } from '../lib/mockServices';
 
 interface Props {
   onBookService: (serviceId: string) => void;

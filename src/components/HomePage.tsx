@@ -153,60 +153,60 @@ const HeroSection = ({ onBookNow }: { onBookNow: () => void }) => {
         <div className="absolute inset-0 bg-gradient-to-br from-amber-200/20 via-transparent to-pink-200/20 animate-float z-20" />
       </div>
 
-      <div className="relative z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
+      <div className="relative z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-32 text-center">
         <div className="animate-fadeInUp">
-          <div className="inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm px-6 py-3 rounded-full shadow-2xl mb-8 animate-bounce-slow">
+          <div className="inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm px-6 py-3 rounded-full shadow-2xl mb-6 animate-bounce-slow">
             <Sparkles className="h-5 w-5 text-amber-500" />
-            <span className="text-sm font-semibold bg-gradient-to-r from-amber-600 to-pink-600 bg-clip-text text-transparent">
+            <span className="text-xs md:text-sm font-semibold bg-gradient-to-r from-amber-600 to-pink-600 bg-clip-text text-transparent">
               Premium Unisex Salon in Jabalpur
             </span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold mb-3 leading-tight text-white drop-shadow-2xl">
+          <h1 className="text-4xl md:text-6xl font-bold mb-3 leading-tight text-white drop-shadow-2xl">
             <span className="bg-gradient-to-r from-amber-300 via-pink-300 to-purple-300 bg-clip-text text-transparent animate-gradient">
               The Velora
             </span>
           </h1>
 
-          <p className="text-2xl md:text-3xl text-amber-200 mb-6 font-serif italic drop-shadow-lg">
+          <p className="text-xl md:text-2xl text-amber-200 mb-4 font-serif italic drop-shadow-lg">
             A Family Salon for U
           </p>
 
-          <p className="text-lg md:text-xl text-white/90 mb-8 max-w-3xl mx-auto drop-shadow-lg">
+          <p className="text-base md:text-lg text-white/90 mb-6 max-w-3xl mx-auto drop-shadow-lg">
             Experience world-class beauty and grooming services for the entire family
           </p>
 
-          <div className="flex flex-wrap justify-center gap-3 mb-12 text-white/90">
-            <span className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-              <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-              <span className="text-sm">Expert Stylists</span>
+          <div className="flex flex-wrap justify-center gap-2 mb-8 text-white/90">
+            <span className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
+              <Star className="h-3 w-3 text-yellow-400 fill-yellow-400" />
+              <span className="text-xs">Expert Stylists</span>
             </span>
-            <span className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-              <Award className="h-4 w-4 text-yellow-400" />
-              <span className="text-sm">Premium Products</span>
+            <span className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
+              <Award className="h-3 w-3 text-yellow-400" />
+              <span className="text-xs">Premium Products</span>
             </span>
-            <span className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-              <Heart className="h-4 w-4 text-pink-400" />
-              <span className="text-sm">Family Friendly</span>
+            <span className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
+              <Heart className="h-3 w-3 text-pink-400" />
+              <span className="text-xs">Family Friendly</span>
             </span>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
             <button
               onClick={onBookNow}
-              className="group px-8 py-4 bg-gradient-to-r from-amber-500 to-pink-500 text-white rounded-full text-lg font-semibold shadow-2xl hover:shadow-amber-500/50 transform hover:scale-105 transition-all duration-300"
+              className="group px-6 py-3 bg-gradient-to-r from-amber-500 to-pink-500 text-white rounded-full text-base md:text-lg font-semibold shadow-2xl hover:shadow-amber-500/50 transform hover:scale-105 transition-all duration-300"
             >
               <span className="flex items-center justify-center space-x-2">
                 <span>Book Appointment Now</span>
-                <Sparkles className="h-5 w-5 group-hover:rotate-12 transition-transform" />
+                <Sparkles className="h-4 w-4 md:h-5 md:w-5 group-hover:rotate-12 transition-transform" />
               </span>
             </button>
             <a
               href="tel:08305335548"
-              className="px-8 py-4 bg-white text-gray-800 rounded-full text-lg font-semibold shadow-2xl hover:shadow-white/50 transform hover:scale-105 transition-all duration-300"
+              className="px-6 py-3 bg-white text-gray-800 rounded-full text-base md:text-lg font-semibold shadow-2xl hover:shadow-white/50 transform hover:scale-105 transition-all duration-300"
             >
               <span className="flex items-center justify-center space-x-2">
-                <Phone className="h-5 w-5" />
+                <Phone className="h-4 w-4 md:h-5 md:w-5" />
                 <span>Call: 083053 35548</span>
               </span>
             </a>
@@ -241,7 +241,7 @@ const HeroSection = ({ onBookNow }: { onBookNow: () => void }) => {
   );
 };
 
-const OffersSection = ({ onBookNow }: { onBookNow: () => void }) => {
+function OffersSection({ onBookNow }: { onBookNow: () => void }) {
   const offers = [
     {
       title: "First Visit Special",
@@ -323,7 +323,7 @@ const OffersSection = ({ onBookNow }: { onBookNow: () => void }) => {
   );
 };
 
-const GenderSpecificServices = ({ onNavigateServices }: { onNavigateServices: (gender: string) => void }) => {
+function GenderSpecificServices({ onNavigateServices }: { onNavigateServices: (gender: string) => void }) {
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -352,12 +352,12 @@ const GenderSpecificServices = ({ onNavigateServices }: { onNavigateServices: (g
             </div>
             <div className="p-6 flex-1 flex flex-col">
               <div className="grid grid-cols-2 gap-3 mb-6">
-                <ServiceTag icon="✂️" text="Haircut & Styling" />
-                <ServiceTag icon="🪒" text="Beard Grooming" />
-                <ServiceTag icon="💆" text="Head Massage" />
-                <ServiceTag icon="🎨" text="Hair Coloring" />
-                <ServiceTag icon="💇" text="Hair Spa" />
-                <ServiceTag icon="✨" text="Facial Treatment" />
+                <ServiceTag icon="✂️" text="Haircut & Styling" onClick={() => onNavigateServices('male')} />
+                <ServiceTag icon="🪒" text="Beard Grooming" onClick={() => onNavigateServices('male')} />
+                <ServiceTag icon="💆" text="Head Massage" onClick={() => onNavigateServices('male')} />
+                <ServiceTag icon="🎨" text="Hair Coloring" onClick={() => onNavigateServices('male')} />
+                <ServiceTag icon="💇" text="Hair Spa" onClick={() => onNavigateServices('male')} />
+                <ServiceTag icon="✨" text="Facial Treatment" onClick={() => onNavigateServices('male')} />
               </div>
               <button
                 onClick={() => onNavigateServices('male')}
@@ -383,12 +383,12 @@ const GenderSpecificServices = ({ onNavigateServices }: { onNavigateServices: (g
             </div>
             <div className="p-6 flex-1 flex flex-col">
               <div className="grid grid-cols-2 gap-3 mb-6">
-                <ServiceTag icon="💇" text="Hair Styling" />
-                <ServiceTag icon="💄" text="Makeup Services" />
-                <ServiceTag icon="💅" text="Nail Art" />
-                <ServiceTag icon="🎨" text="Hair Coloring" />
-                <ServiceTag icon="✨" text="Bridal Makeup" />
-                <ServiceTag icon="🧖" text="Spa Treatments" />
+                <ServiceTag icon="💇" text="Hair Styling" onClick={() => onNavigateServices('female')} />
+                <ServiceTag icon="💄" text="Makeup Services" onClick={() => onNavigateServices('female')} />
+                <ServiceTag icon="💅" text="Nail Art" onClick={() => onNavigateServices('female')} />
+                <ServiceTag icon="🎨" text="Hair Coloring" onClick={() => onNavigateServices('female')} />
+                <ServiceTag icon="✨" text="Bridal Makeup" onClick={() => onNavigateServices('female')} />
+                <ServiceTag icon="🧖" text="Spa Treatments" onClick={() => onNavigateServices('female')} />
               </div>
               <button
                 onClick={() => onNavigateServices('female')}
@@ -404,7 +404,7 @@ const GenderSpecificServices = ({ onNavigateServices }: { onNavigateServices: (g
   );
 };
 
-const WhyChooseUs = () => {
+function WhyChooseUs() {
   const features = [
     {
       icon: <Award className="h-10 w-10" />,
@@ -525,7 +525,7 @@ const WhyChooseUs = () => {
   );
 };
 
-const GallerySection = ({ onNavigateGallery }: { onNavigateGallery: () => void }) => {
+function GallerySection({ onNavigateGallery }: { onNavigateGallery: () => void }) {
   const images = [
     "https://images.pexels.com/photos/3065209/pexels-photo-3065209.jpeg?auto=compress&cs=tinysrgb&w=600",
     "https://images.pexels.com/photos/1319460/pexels-photo-1319460.jpeg?auto=compress&cs=tinysrgb&w=600",
@@ -601,7 +601,7 @@ const GallerySection = ({ onNavigateGallery }: { onNavigateGallery: () => void }
   );
 };
 
-const TestimonialsSection = () => {
+function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const testimonials = [
@@ -692,8 +692,11 @@ const InfoCard = ({ icon, title, description }: { icon: React.ReactNode; title: 
   </div>
 );
 
-const ServiceTag = ({ icon, text }: { icon: string; text: string }) => (
-  <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3 py-2 rounded-lg shadow">
+const ServiceTag = ({ icon, text, onClick }: { icon: string; text: string; onClick?: () => void }) => (
+  <div
+    className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3 py-2 rounded-lg shadow cursor-pointer hover:bg-white hover:shadow-md transition-all duration-200 hover:scale-105"
+    onClick={onClick}
+  >
     <span className="text-lg">{icon}</span>
     <span className="text-sm font-medium text-gray-700">{text}</span>
   </div>

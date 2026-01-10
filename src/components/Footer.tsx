@@ -1,6 +1,10 @@
 import { MapPin, Clock, Phone } from 'lucide-react';
 
-export const Footer = () => {
+interface FooterProps {
+  onNavigate: (page: string) => void;
+}
+
+export const Footer = ({ onNavigate }: FooterProps) => {
   return (
     <footer className="bg-gradient-to-r from-amber-600 via-pink-600 to-purple-600 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -32,22 +36,22 @@ export const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Home</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Services</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">About Us</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Contact</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Book Now</a></li>
+              <li><button onClick={() => onNavigate('home')} className="text-white/80 hover:text-white transition-colors text-left">Home</button></li>
+              <li><button onClick={() => onNavigate('services')} className="text-white/80 hover:text-white transition-colors text-left">Services</button></li>
+              <li><button onClick={() => onNavigate('about')} className="text-white/80 hover:text-white transition-colors text-left">About Us</button></li>
+              <li><button onClick={() => onNavigate('contact')} className="text-white/80 hover:text-white transition-colors text-left">Contact</button></li>
+              <li><button onClick={() => onNavigate('booking')} className="text-white/80 hover:text-white transition-colors text-left">Book Now</button></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-lg font-semibold mb-4">Services</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Hair Styling</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Makeup Services</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Spa Treatments</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Bridal Packages</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Men's Grooming</a></li>
+              <li><button onClick={() => onNavigate('services')} className="text-white/80 hover:text-white transition-colors text-left">Hair Styling</button></li>
+              <li><button onClick={() => onNavigate('services')} className="text-white/80 hover:text-white transition-colors text-left">Makeup Services</button></li>
+              <li><button onClick={() => onNavigate('services')} className="text-white/80 hover:text-white transition-colors text-left">Spa Treatments</button></li>
+              <li><button onClick={() => onNavigate('services')} className="text-white/80 hover:text-white transition-colors text-left">Bridal Packages</button></li>
+              <li><button onClick={() => onNavigate('services')} className="text-white/80 hover:text-white transition-colors text-left">Men's Grooming</button></li>
             </ul>
           </div>
 
