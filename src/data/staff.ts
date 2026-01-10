@@ -14,6 +14,7 @@ const STAFF_LIST: Staff[] = [
 
 ];
 
+
 export const fetchStaff = async (): Promise<Staff[]> => {
   // simulate async fetch
   await new Promise((r) => setTimeout(r, 200));
