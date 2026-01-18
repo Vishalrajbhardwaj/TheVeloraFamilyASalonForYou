@@ -17,6 +17,7 @@ const PhotoVideoPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const mediaItems: MediaItem[] = [
+    // Our Team Photos
     {
       id: '1',
       type: 'photo',
@@ -57,6 +58,8 @@ const PhotoVideoPage = () => {
       description: 'Dedicated professional providing exceptional salon services',
       category: 'Our Team'
     },
+
+    // Brand Assets
     {
       id: '6',
       type: 'photo',
@@ -80,6 +83,68 @@ const PhotoVideoPage = () => {
       title: 'Salon Logo',
       description: 'Our distinctive logo representing the heart of our beauty services',
       category: 'Brand'
+    },
+
+    // Our Work Photos
+    {
+      id: '9',
+      type: 'photo',
+      src: '/TheVeloraFamilyASalonForYou/gallery/pic 1.jpg',
+      title: 'Elegant Hair Styling',
+      description: 'Beautiful transformation showcasing our hair styling expertise',
+      category: 'Our Work'
+    },
+    {
+      id: '10',
+      type: 'photo',
+      src: '/TheVeloraFamilyASalonForYou/gallery/pic 2.jpg',
+      title: 'Professional Makeup Art',
+      description: 'Stunning makeup application for special occasions',
+      category: 'Our Work'
+    },
+    {
+      id: '11',
+      type: 'photo',
+      src: '/TheVeloraFamilyASalonForYou/gallery/pic 3.jpg',
+      title: 'Nail Art Excellence',
+      description: 'Creative and precise nail art services',
+      category: 'Our Work'
+    },
+    {
+      id: '12',
+      type: 'photo',
+      src: '/TheVeloraFamilyASalonForYou/gallery/pic 4.jpg',
+      title: 'Beauty Treatment Results',
+      description: 'Before and after transformations from our beauty treatments',
+      category: 'Our Work'
+    },
+    {
+      id: '13',
+      type: 'photo',
+      src: '/TheVeloraFamilyASalonForYou/gallery/pic 5.jpg',
+      title: 'Complete Salon Experience',
+      description: 'Showcasing our comprehensive beauty and wellness services',
+      category: 'Our Work'
+    },
+
+    // Videos
+    {
+      id: '14',
+      type: 'video',
+      src: '/TheVeloraFamilyASalonForYou/gallery/vid 1.mp4',
+      thumbnail: '/TheVeloraFamilyASalonForYou/gallery/vid2.png',
+      title: 'Salon Transformation Video',
+      description: 'Watch our expert stylists create stunning transformations',
+      category: 'Videos'
+    },
+    {
+      id: '15',
+      type: 'video',
+      src: '/TheVeloraFamilyASalonForYou/gallery/vid3.mp4',
+      thumbnail: '/TheVeloraFamilyASalonForYou/gallery/vid2.png',
+      title: 'Beauty Service Showcase',
+      description: 'Behind the scenes look at our professional beauty services',
+      category: 'Videos'
     }
   ];
 
