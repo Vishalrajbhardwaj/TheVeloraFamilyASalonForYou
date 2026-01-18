@@ -20,7 +20,7 @@ const PhotoVideoPage = () => {
     {
       id: '1',
       type: 'photo',
-      src: '/gallery/sia.jpeg',
+      src: '/TheVeloraFamilyASalonForYou/gallery/sia.jpeg',
       title: 'Shivangi - Hair, Beauty & Makeup Artist',
       description: 'Expert in Hair, Beauty, MakeUp & Nail services with years of experience',
       category: 'Our Team'
@@ -28,7 +28,7 @@ const PhotoVideoPage = () => {
     {
       id: '2',
       type: 'photo',
-      src: '/gallery/anjali.jpeg',
+      src: '/TheVeloraFamilyASalonForYou/gallery/anjali.jpeg',
       title: 'Anjali Pasi - Makeup Artist & Beautician',
       description: '5+ years of experience in professional makeup and beauty treatments',
       category: 'Our Team'
@@ -36,7 +36,7 @@ const PhotoVideoPage = () => {
     {
       id: '3',
       type: 'photo',
-      src: '/gallery/dipanshu.jpeg',
+      src: '/TheVeloraFamilyASalonForYou/gallery/dipanshu.jpeg',
       title: 'Dipanshu Sen - Unisex Hair Artist',
       description: '5+ years of experience as a skilled unisex hair artist',
       category: 'Our Team'
@@ -44,7 +44,7 @@ const PhotoVideoPage = () => {
     {
       id: '4',
       type: 'photo',
-      src: '/gallery/vandana.jpeg',
+      src: '/TheVeloraFamilyASalonForYou/gallery/vandana.jpeg',
       title: 'Varsha Barmaiya - Beautician',
       description: '7+ years of experience providing exceptional beauty services',
       category: 'Our Team'
@@ -52,7 +52,7 @@ const PhotoVideoPage = () => {
     {
       id: '5',
       type: 'photo',
-      src: '/gallery/hemant.jpeg',
+      src: '/TheVeloraFamilyASalonForYou/gallery/hemant.jpeg',
       title: 'Hemant - Salon Professional',
       description: 'Dedicated professional providing exceptional salon services',
       category: 'Our Team'
@@ -60,7 +60,7 @@ const PhotoVideoPage = () => {
     {
       id: '6',
       type: 'photo',
-      src: '/velora-logo.png',
+      src: '/TheVeloraFamilyASalonForYou/velora-logo.png',
       title: 'The Velora Family Logo',
       description: 'Our brand represents quality, care, and excellence in beauty services',
       category: 'Brand'
@@ -68,7 +68,7 @@ const PhotoVideoPage = () => {
     {
       id: '7',
       type: 'photo',
-      src: '/velora-logo1.png',
+      src: '/TheVeloraFamilyASalonForYou/velora-logo1.png',
       title: 'Velora Family Brand Identity',
       description: 'Professional branding that reflects our commitment to beauty and care',
       category: 'Brand'
@@ -76,7 +76,7 @@ const PhotoVideoPage = () => {
     {
       id: '8',
       type: 'photo',
-      src: '/logo.png',
+      src: '/TheVeloraFamilyASalonForYou/logo.png',
       title: 'Salon Logo',
       description: 'Our distinctive logo representing the heart of our beauty services',
       category: 'Brand'
