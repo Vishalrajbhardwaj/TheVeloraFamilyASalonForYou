@@ -20,52 +20,66 @@ const PhotoVideoPage = () => {
     {
       id: '1',
       type: 'photo',
-      src: 'https://images.pexels.com/photos/3065209/pexels-photo-3065209.jpeg?auto=compress&cs=tinysrgb&w=800',
-      title: 'Salon Interior',
-      description: 'Modern and elegant salon space',
-      category: 'Interior'
+      src: '/gallery/sia.jpeg',
+      title: 'Shivangi - Hair, Beauty & Makeup Artist',
+      description: 'Expert in Hair, Beauty, MakeUp & Nail services with years of experience',
+      category: 'Our Team'
     },
     {
       id: '2',
-      type: 'video',
-      src: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-      thumbnail: 'https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=400',
-      title: 'Hair Styling Demo',
-      description: 'Professional hair styling techniques',
-      category: 'Hair Styling'
+      type: 'photo',
+      src: '/gallery/anjali.jpeg',
+      title: 'Anjali Pasi - Makeup Artist & Beautician',
+      description: '5+ years of experience in professional makeup and beauty treatments',
+      category: 'Our Team'
     },
     {
       id: '3',
       type: 'photo',
-      src: 'https://images.pexels.com/photos/1319460/pexels-photo-1319460.jpeg?auto=compress&cs=tinysrgb&w=800',
-      title: 'Men\'s Grooming',
-      description: 'Complete men\'s grooming services',
-      category: 'Grooming'
+      src: '/gallery/dipanshu.jpeg',
+      title: 'Dipanshu Sen - Unisex Hair Artist',
+      description: '5+ years of experience as a skilled unisex hair artist',
+      category: 'Our Team'
     },
     {
       id: '4',
       type: 'photo',
-      src: 'https://images.pexels.com/photos/3992874/pexels-photo-3992874.jpeg?auto=compress&cs=tinysrgb&w=800',
-      title: 'Bridal Makeup',
-      description: 'Stunning bridal makeup transformations',
-      category: 'Bridal'
+      src: '/gallery/vandana.jpeg',
+      title: 'Varsha Barmaiya - Beautician',
+      description: '7+ years of experience providing exceptional beauty services',
+      category: 'Our Team'
     },
     {
       id: '5',
-      type: 'video',
-      src: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4',
-      thumbnail: 'https://images.pexels.com/photos/3738386/pexels-photo-3738386.jpeg?auto=compress&cs=tinysrgb&w=400',
-      title: 'Spa Treatment',
-      description: 'Relaxing spa experience',
-      category: 'Spa'
+      type: 'photo',
+      src: '/gallery/hemant.jpeg',
+      title: 'Hemant - Salon Professional',
+      description: 'Dedicated professional providing exceptional salon services',
+      category: 'Our Team'
     },
     {
       id: '6',
       type: 'photo',
-      src: 'https://images.pexels.com/photos/3065171/pexels-photo-3065171.jpeg?auto=compress&cs=tinysrgb&w=800',
-      title: 'Nail Art',
-      description: 'Creative and beautiful nail designs',
-      category: 'Nail Art'
+      src: '/velora-logo.png',
+      title: 'The Velora Family Logo',
+      description: 'Our brand represents quality, care, and excellence in beauty services',
+      category: 'Brand'
+    },
+    {
+      id: '7',
+      type: 'photo',
+      src: '/velora-logo1.png',
+      title: 'Velora Family Brand Identity',
+      description: 'Professional branding that reflects our commitment to beauty and care',
+      category: 'Brand'
+    },
+    {
+      id: '8',
+      type: 'photo',
+      src: '/logo.png',
+      title: 'Salon Logo',
+      description: 'Our distinctive logo representing the heart of our beauty services',
+      category: 'Brand'
     }
   ];
 
