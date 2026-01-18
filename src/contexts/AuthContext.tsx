@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { supabase } from '../lib/supabase';
 
 interface Profile {
   id: string;
@@ -20,7 +19,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Simple local auth stub — no external provider
+// Mock auth provider - no database dependency
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<{ id: string; email?: string } | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -28,86 +27,42 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!supabase) {
-      setLoading(false);
-      return;
-    }
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        loadProfile(session.user.id);
-      } else {
-        setLoading(false);
-      }
-    }).catch(() => {
-      setLoading(false);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      (async () => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        if (session?.user) {
-          await loadProfile(session.user.id);
-        } else {
-          setProfile(null);
-          setLoading(false);
-        }
-      })();
-    });
-
-    return () => subscription.unsubscribe();
+    // Initialize with no loading since there's no database to check
+    setLoading(false);
   }, []);
 
-  const loadProfile = async (userId: string) => {
-    if (!supabase) {
-      setLoading(false);
-      return;
-    }
-    try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', userId)
-        .maybeSingle();
+  const signUp = async (email: string, _password: string, fullName: string, phone?: string) => {
+    // Mock signup - just create a profile
+    const id = `mock-${Date.now()}`;
+    const newProfile: Profile = {
+      id,
+      full_name: fullName,
+      phone: phone || null,
+      role: 'user'
+    };
 
-      if (error) throw error;
-      setProfile(data);
-    } catch (error) {
-      console.error('Error loading profile:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    setUser({ id, email });
+    setProfile(newProfile);
+    setSession({ created_at: new Date().toISOString(), user: { id, email } });
 
-  const signUp = async (email: string, password: string, fullName: string, phone: string) => {
-    try {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: fullName,
-            phone: phone,
-          },
-        },
-      });
-      return { error };
-    } catch (error) {
-      return { error };
-    }
+    return { error: null };
   };
 
   const signIn = async (email: string, _password: string) => {
-    // Local stub: set a temporary user/profile
-    const id = `local-${Date.now()}`;
+    // Mock signin - create temporary user/profile
+    const id = `mock-${Date.now()}`;
+    const mockProfile: Profile = {
+      id,
+      full_name: email.split('@')[0],
+      phone: null,
+      role: 'user'
+    };
+
     setUser({ id, email });
-    const p: Profile = { id, full_name: email.split('@')[0], phone: null, role: 'user' };
-    setProfile(p);
+    setProfile(mockProfile);
     setSession({ created_at: new Date().toISOString(), user: { id, email } });
-    return { error: null, profile: p };
+
+    return { error: null, profile: mockProfile };
   };
 
   const signOut = async () => {
